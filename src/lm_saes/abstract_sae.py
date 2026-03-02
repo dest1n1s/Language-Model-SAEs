@@ -109,7 +109,7 @@ class SparseDictionaryConfig(BaseModelConfig, ABC):
     act_fn: Literal["relu", "jumprelu", "topk", "batchtopk", "batchlayertopk", "layertopk"] = "relu"
     """The activation function to use for the sparse dictionary. Currently supported activation functions are `relu`, `jumprelu`, `topk`, `batchtopk`, `batchlayertopk`, and `layertopk`.
     
-    - `relu`: ReLU activation function. Used in the most vanilla sparse dictionary settings.
+    - `relu`: ReLU activation function. Used in the most vanilla SAE settings.
     - `jumprelu`: JumpReLU activation function, adding a trainable element-wise threshold that pre-activations must pass to be activated, which is formally defined as :math:`f(x) = \\max(0, x - \\theta)` where :math:`\\theta` is the threshold. Proposed in [Jumping Ahead: Improving Reconstruction Fidelity with JumpReLU Sparse Autoencoders](https://arxiv.org/abs/2407.14435).
     - `topk`: TopK activation function. Retains the top K activations per sample, zeroing out the rest. Proposed in [Scaling and evaluating sparse autoencoders](https://openreview.net/forum?id=tcsZt9ZNKD).
     - `batchtopk`: BatchTopK activation function. Batch TopK relaxes TopK function to batch-level, ing the top `k * batch_size` activations per batch and zeroing out the rest. This allows more adaptive allocation of latents on each sample. Proposed in [BatchTopK Sparse Autoencoders](https://arxiv.org/abs/2412.06410).
@@ -134,7 +134,7 @@ class SparseDictionaryConfig(BaseModelConfig, ABC):
     """The k value to use for the topk family of activation functions. For vanilla TopK, the L0 norm of the feature activations will be exactly equal to `top_k`."""
 
     use_triton_kernel: bool = False
-    """Whether to use the Triton SpMM kernel for the sparse matrix multiplication. Currently only supported for vanilla sparse dictionary."""
+    """Whether to use the Triton SpMM kernel for the sparse matrix multiplication. Currently only supported for vanilla SAE."""
 
     sparsity_threshold_for_triton_spmm_kernel: float = 0.996
     """The sparsity threshold for the Triton SpMM kernel. Only when feature activation sparsity reaches this threshold, the Triton SpMM kernel will be used for the sparse matrix multiplication. This is useful for JumpReLU or TopK with a k annealing schedule, where the sparsity is not guaranteed throughout the training."""
