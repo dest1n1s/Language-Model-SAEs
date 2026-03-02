@@ -1,17 +1,17 @@
 # Language Model SAEs
 
-Welcome to the documentation for **Language Model SAEs** - a library for training and analyzing Sparse Autoencoders (SAEs) on language models.
+Welcome to the documentation for **Language Model SAEs** - a library for training and analyzing sparse dictionaries on language models.
 
 ## Overview
 
-Sparse Autoencoders (SAEs) are neural network models used to extract interpretable features from language models. They help address the superposition problem in neural networks by learning sparse, interpretable representations of activations.
+Sparse dictionaries are neural network models used to extract interpretable features from language models. They help address the superposition problem in neural networks by learning sparse, interpretable representations of activations.
 
 This library provides:
 
-- **Scalability**: Our framework is fully distributed with arbitrary combinations of data, model, and head parallelism for both training and analysis. Enjoy training SAEs with millions of features!
-- **Flexibility**: We support a wide range of SAE variants, including vanilla SAEs, Lorsa (Low-rank Sparse Attention), CLT (Cross-layer Transcoder), MoLT (Mixture of Linear Transforms), CrossCoder, and more. Each variant can be combined with different activation functions (e.g., ReLU, JumpReLU, TopK, BatchTopK) and sparsity penalties (e.g., L1, Tanh).
+- **Scalability**: Our framework is fully distributed with arbitrary combinations of data, model, and head parallelism for both training and analysis. Enjoy training sparse dictionaries with millions of features!
+- **Flexibility**: We support a wide range of sparse dictionary variants, including vanilla SAEs, Lorsa (Low-rank Sparse Attention), CLT (Cross-layer Transcoder), MoLT (Mixture of Linear Transforms), CrossCoder, and more. Each variant can be combined with different activation functions (e.g., ReLU, JumpReLU, TopK, BatchTopK) and sparsity penalties (e.g., L1, Tanh).
 - **Easy to Use**: We provide high-level `runners` APIs to quickly launch experiments with simple configurations. Check our [examples](https://github.com/OpenMOSS/Language-Model-SAEs/tree/main/examples) for verified hyperparameters.
-- **Visualization**: We provide a unified web interface to visualize learned SAE variants and their features.
+- **Visualization**: We provide a unified web interface to visualize learned sparse dictionary variants and their features.
 
 ## Quick Start
 
@@ -47,15 +47,15 @@ This library provides:
     pip install lm-saes[npu]
     ```
 
-### Load a trained Sparse Autoencoder from HuggingFace
+### Load a trained sparse dictionary from HuggingFace
 
-Load any Sparse Autoencoder or other sparse dictionaries in `Language-Model-SAEs` or SAELens format.
+Load any sparse dictionary in `Language-Model-SAEs` or SAELens format.
 
 === "Language-Model-SAEs"
 
     ```python
     # Load Llama Scope 2 Transcoder
-    sae = AbstractSparseAutoEncoder.from_pretrained(
+    sae = SparseDictionary.from_pretrained(
         "OpenMOSS-Team/Llama-Scope-2-Qwen3-1.7B:transcoder/8x/k128/layer12_transcoder_8x_k128",
         fold_activation_scale=False
     )
@@ -64,15 +64,15 @@ Load any Sparse Autoencoder or other sparse dictionaries in `Language-Model-SAEs
 === "SAELens"
 
     ```python
-    # Load Gemma Scope 2 SAE
-    sae = AbstractSparseAutoEncoder.from_pretrained(
+    # Load Gemma Scope 2 sparse dictionary
+    sae = SparseDictionary.from_pretrained(
         "gemma-scope-2-1b-pt-res-all:layer_12_width_16k_l0_small",
     )
     ```    
 
-### Training a Sparse Autoencoder
+### Training a sparse dictionary
 
-To train a simple Sparse Autoencoder on `blocks.5.hook_resid_post` of a Pythia-160M model with $768*8$ features, you can use the following:
+To train a simple sparse dictionary on `blocks.5.hook_resid_post` of a Pythia-160M model with $768*8$ features, you can use the following:
 
 ```python
 settings = TrainSAESettings(
@@ -138,7 +138,7 @@ settings = TrainSAESettings(
 train_sae(settings)
 ```
 
-### Analyze a trained Sparse Autoencoder
+### Analyze a trained sparse dictionary
 
 Requires setting up [MongoDB](https://www.mongodb.com/). See [analyze-saes](analyze-saes.md) for details.
 
@@ -164,9 +164,9 @@ settings = AnalyzeSAESettings(
 analyze_sae(settings)
 ```
 
-### Convert trained Sparse Autoencoder to SAELens format
+### Convert trained sparse dictionary to SAELens format
 
-Requires `sae_lens` package available. Supports ReLU, JumpReLU, and TopK SAEs.
+Requires `sae_lens` package available. Supports ReLU, JumpReLU, and TopK sparse dictionaries.
 
 ```python
 from lm_saes import SparseAutoEncoder

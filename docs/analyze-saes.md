@@ -1,8 +1,8 @@
-# Analyze Sparse Autoencoders
+# Analyze Sparse Dictionaries
 
-What can a trained Sparse Autoencoder tell us? As an approach to **Interpretability**, we definitely want to see what each individual latent of a Sparse Autoencoder (i.e., **feature**) means.
+What can a trained sparse dictionary tell us? As an approach to **Interpretability**, we definitely want to see what each individual latent of a sparse dictionary (i.e., **feature**) means.
 
-`Language-Model-SAEs` incorporates a bunch of methods to explore the functionality of each individual feature, primarily on on what context a feature activates. If an SAE is trained well, you can naturally observe that there's a type of commonality among these contexts. The language model extracts information from these context and expresses it by the feature's activation. Other types of analytical methods are also supported, including Direct Logit Attribution and Automated Interpretation.
+`Language-Model-SAEs` incorporates a bunch of methods to explore the functionality of each individual feature, primarily on on what context a feature activates. If a sparse dictionary is trained well, you can naturally observe that there's a type of commonality among these contexts. The language model extracts information from these context and expresses it by the feature's activation. Other types of analytical methods are also supported, including Direct Logit Attribution and Automated Interpretation.
 
 ## Setup Prerequisites
 
@@ -14,11 +14,11 @@ Alternatively, to launch MongoDB with [Docker](https://www.docker.com/), run the
 docker run -d --name mongodb --restart always -p 27017:27017 mongo:latest
 ```
 
-## Analyze a trained Sparse Autoencoder
+## Analyze a trained sparse dictionary
 
-A main entrypoint of feaature analyzing is provided for basic feature statistical information, including the activation context at different magnitudes.
+A main entrypoint of feature analyzing is provided for basic feature statistical information, including the activation context at different magnitudes.
 
-To analyze a trained Sparse Autoencoder, you can run the following variants:
+To analyze a trained sparse dictionary, you can run the following variants:
 
 === "Runner"
 
@@ -133,7 +133,7 @@ To analyze a trained Sparse Autoencoder, you can run the following variants:
         FeatureAnalyzer,
         FeatureAnalyzerConfig,
         TransformerLensLanguageModel,
-        AbstractSparseAutoEncoder,
+        SparseDictionary,
     )
 
     # Load Model & Dataset
@@ -161,8 +161,8 @@ To analyze a trained Sparse Autoencoder, you can run the following variants:
         )
     )
 
-    # Load trained SAE from disk
-    sae = AbstractSparseAutoEncoder.from_pretrained("results", device="cuda")
+    # Load trained sparse dictionary from disk
+    sae = SparseDictionary.from_pretrained("results", device="cuda")
 
     # Analyze it
     analyzer = FeatureAnalyzer(

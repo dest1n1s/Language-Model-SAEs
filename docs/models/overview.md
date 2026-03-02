@@ -16,7 +16,7 @@ This section provides comprehensive documentation for the various sparse diction
 
 ## Common Configuration Parameters
 
-All sparse dictionary variants inherit from `BaseSAEConfig`, which provides common configuration parameters. These parameters are available for all model types unless specifically overridden.
+All sparse dictionary variants inherit from `SparseDictionaryConfig`, which provides common configuration parameters. These parameters are available for all model types unless specifically overridden.
 
 ### Core Architecture Parameters
 
@@ -35,7 +35,7 @@ All sparse dictionary variants inherit from `BaseSAEConfig`, which provides comm
 
 **Activation function descriptions:**
 
-- `relu`: ReLU activation function. Used in the most vanilla SAE settings.
+- `relu`: ReLU activation function. Used in the most vanilla sparse dictionary settings.
 - `jumprelu`: JumpReLU activation function, adding a trainable element-wise threshold that pre-activations must pass to be activated. Proposed in [*Jumping Ahead: Improving Reconstruction Fidelity with JumpReLU Sparse Autoencoders*](https://arxiv.org/abs/2407.14435).
 - `topk`: TopK activation function. Retains the top K activations per sample, zeroing out the rest. Proposed in [*Scaling and evaluating sparse autoencoders*](https://openreview.net/forum?id=tcsZt9ZNKD).
 - `batchtopk`: BatchTopK activation function. Relaxes TopK to batch-level, selecting the top `k * batch_size` activations per batch. Allows more adaptive allocation of latents on each sample. Proposed in [*BatchTopK Sparse Autoencoders*](https://arxiv.org/abs/2412.06410).
@@ -71,5 +71,5 @@ All sparse dictionary variants inherit from `BaseSAEConfig`, which provides comm
 
 | Parameter | Type | Description | Default |
 |-----------|------|-------------|---------|
-| `use_triton_kernel` | `bool` | Whether to use the Triton SpMM kernel for sparse matrix multiplication. Currently only supported for vanilla SAE | `False` |
+| `use_triton_kernel` | `bool` | Whether to use the Triton SpMM kernel for sparse matrix multiplication. Currently only supported for vanilla sparse dictionary | `False` |
 | `sparsity_threshold_for_triton_spmm_kernel` | `float` | The sparsity threshold for the Triton SpMM kernel. Only when feature activation sparsity reaches this threshold will the Triton SpMM kernel be used. Useful for JumpReLU or TopK with a k annealing schedule | `0.996` |
